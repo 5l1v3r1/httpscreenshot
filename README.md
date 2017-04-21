@@ -1,7 +1,7 @@
 Added options:
 
 ```
--s,--single	test a single url  
+-s, --single	test a single url  
 -o, --output	output directory to store datas  
 ```
 
