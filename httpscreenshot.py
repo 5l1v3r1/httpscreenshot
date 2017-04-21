@@ -239,7 +239,7 @@ def worker(urlQueue, tout, debug, headless, doProfile, vhosts, subs, extraHosts,
 			except Queue.Empty:
 				continue
 			print '[+] '+str(urlQueue.qsize())+' URLs remaining'
-			screenshotName = quote(curUrl[0], safe='')
+			screenshotName = output+quote(curUrl[0], safe='')
 			if(debug):
 				print '[+] Got URL: '+curUrl[0]
 				print '[+] screenshotName: '+screenshotName
@@ -486,6 +486,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 
 	parser.add_argument("-l","--list",help='List of input URLs')
+	parser.add_argument("-o","--output",help='directory to save datas')
 	parser.add_argument("-s","--single",help='single URL')
 	parser.add_argument("-i","--input",help='nmap gnmap/xml output file')
 	parser.add_argument("-p","--headless",action='store_true',default=False,help='Run in headless mode (using phantomjs)')
@@ -514,6 +515,13 @@ if __name__ == '__main__':
 		uris = open(args.uri_list,'r').readlines()
 		uris.append('')
 
+	if(args.output != None):
+		output = args.output+'/'
+		if(not os.path.exists(output)):
+			os.makedirs(output)
+	else:
+		output = './'
+	
 	if(args.input is not None):
 		inFile = open(args.input,'rU')
 		if(detectFileType(inFile) == 'gnmap'):
